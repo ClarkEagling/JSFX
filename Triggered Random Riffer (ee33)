@@ -1,0 +1,12 @@
+//pseudocode:
+//drop-down selected array of possible midi note values to use for root note
+//arrays of steps in scale 
+//array of possible note on / note off delays
+
+//loop: 
+//rootnote = slider picks from root note array,
+//populate 8 variables with rootnote + randomly chosen step value (including
+//populate 8 note on to note off timing variables
+//populate 8 rest variables
+
+//on midi trigger: re-roll variables
