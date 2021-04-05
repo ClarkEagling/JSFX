@@ -1,0 +1,19 @@
+desc:Random MIDI Delay and Repeat (ee33)
+
+in_pin:none
+out_pin:none
+
+
+@block
+
+while (midirecv(offset,msg1,msg2,msg3)) ( 
+calc = ceil(beat_position + (rand(8000)));
+offset = calc-beat_position;
+   // Send delayed message.
+  msg1==$x90 ? (midisend(offset,msg1,msg2,msg3*(rand(1))));
+  msg1==$x80 ? (midisend((offset+rand(1000)),msg1,msg2,msg3));
+   );
+
+   
+
+

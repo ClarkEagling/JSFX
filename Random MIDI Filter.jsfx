@@ -1,0 +1,24 @@
+desc:Random MIDI Filter (ee33)
+
+slider1:64<0,127,1>Drop rate
+
+in_pin:none
+out_pin:none
+
+@slider
+cutoff = slider1;
+
+@block
+
+while (midirecv(offset,msg1,msg2,msg3)) ( 
+coinFlip = ceil(rand(127));
+
+ coinFlip < cutoff ?
+   (
+   midisend(offset,msg1,msg2,0);
+   ) : (
+   midisend(offset,msg1,msg2,msg3);
+   )
+);
+
+

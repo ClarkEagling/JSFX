@@ -1,0 +1,69 @@
+desc: KeyHack Generator (ee33)
+//tags: Key Trigger Random Generator
+//author: Robert Randolph hacked by Clark Eagling
+
+slider1:0<0,127,1>Random Value C8
+slider2:0<0,127,1>Random Value C#8
+slider3:0<0,127,1>Random Value D8
+slider4:0<0,127,1>Random Value D#8
+slider5:0<0,127,1>Random Value E8
+slider6:0<0,127,1>Random Value F8
+slider7:0<0,1,1{Note On, Note Off}>Trigger
+//slider8:0<0,15,1{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}>Input Channel
+
+in_pin:none
+out_pin:none
+
+@init
+
+noteOn = $x90;
+noteOff = $x80;
+
+@slider
+//inChannel = slider8;
+noteTrig = slider7
+
+
+@block
+
+while (midirecv(offset,msg1,msg2,msg3)) ( 
+ //   channel = msg1 & $x0F;
+    currentNote = msg2;
+    onOffStatus = msg1 & $xF0; // 144 == Note On, 128 == Note Off
+
+    trigTest = noteTrig == 0 ? (noteOn):(noteOff); // comparison value based on our note on/off setting
+
+    currentNote == 120 ? (
+        trigTest == onOffStatus ? (
+            slider1 = (rand(127+1-0)+0)&$x7F;
+            )
+            );
+            
+            currentNote == 121 ? (
+                trigTest == onOffStatus ? (
+                    slider2 = (rand(127+1-0)+0)&$x7F;
+                    )
+                        );
+                    currentNote == 122 ? (
+                        trigTest == onOffStatus ? (
+                            slider3 = (rand(127+1-0)+0)&$x7F;
+                           )
+                               ); 
+                            currentNote == 123 ? (
+                                trigTest == onOffStatus ? (
+                                    slider4 = (rand(127+1-0)+0)&$x7F;
+                                  )
+                                      );  
+                                    currentNote == 124 ? (
+                                        trigTest == onOffStatus ? (
+                                            slider5 = (rand(127+1-0)+0)&$x7F;
+                                        )
+                                            );    
+                                            currentNote == 125 ? (
+                                                trigTest == onOffStatus ? (
+                                                    slider6 = (rand(127+1-0)+0)&$x7F;
+        )
+    );
+    
+  //  midisend(offset,msg1,msg2,msg3); // pass through
+);

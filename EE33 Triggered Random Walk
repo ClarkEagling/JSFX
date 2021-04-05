@@ -1,0 +1,120 @@
+desc:Triggered Random Walk (ee33)
+slider1: 0<-127,127,1>Random Walk 1 (course) (C -2 resets)
+slider5: 50<0,100, 1>Walk 1 Bias
+slider2: 0<-127,127,1>Random Walk 2 (course) (C# -2 resets)
+slider6: 50<0,100, 1>Walk 2 Bias
+slider3: 0<-1000,1000,1>Random Walk 3 (fine) (D -2 resets)
+slider7: 40<0,100, 1>Walk 3 Bias
+slider4: 0<-1000,1000,1>Random Walk 4 (fine) (D# -2 resets)
+slider8: 60<0,100, 1>Walk 4 Bias
+slider10: 500<0,3000,1> LFO Speed
+slider9:0<0,1,1{Note On, Note Off}>Trigger
+
+in_pin:none
+out_pin:none
+
+@init
+
+noteOn = $x90;
+noteOff = $x80;
+reverser = 0;
+
+@slider
+noteTrig = slider9;
+bias1 = slider5;
+bias2 = slider6;
+bias3 = slider7;
+bias4 = slider8;
+speed = slider10;
+
+//on midi trigger, reset random walk value to  0
+//on loop, change random walk value by either -1 or 1 (coin flip)
+
+@block
+
+counter > speed ? reverser = 1;
+
+counter < 0 ?  reverser = 0;
+
+reverser == 1 ?
+(b1 = 100-bias1;
+b2 = 100-bias2;
+b3 = 100-bias3;
+b4 = 100-bias4;
+counter = counter-1;
+);
+
+reverser == 0 ?
+(
+b1 = bias1;
+b2 = bias2;
+b3 = bias3;
+b4 = bias4;
+counter = counter+1;
+);
+
+// slider 1
+coinFlip1 = ceil(rand(100));
+ coinFlip1 < b1 ?
+   (
+ slider1 = slider1 - 1;
+   ) : (
+ slider1 = slider1 + 1;
+   );
+   
+   // slider 2
+   coinFlip2 = ceil(rand(100));
+    coinFlip2 < b2 ?
+      (
+    slider2 = slider2 - 1;
+      ) : (
+    slider2 = slider2 + 1;
+      );
+      
+      // slider 3
+      coinFlip3 = ceil(rand(100));
+       coinFlip3 < b3 ?
+         (
+       slider3 = slider3 - 1;
+         ) : (
+       slider3 = slider3 + 1;
+         );
+         
+         // slider4
+         coinFlip4 = ceil(rand(100));
+          coinFlip4 < b4 ?
+            (
+          slider4 = slider4 - 1;
+            ) : (
+          slider4 = slider4 + 1;
+            );
+
+while (midirecv(offset,msg1,msg2,msg3)) ( 
+ //   channel = msg1 & $x0F;
+    currentNote = msg2;
+    onOffStatus = msg1 & $xF0; // 144 == Note On, 128 == Note Off
+
+    trigTest = noteTrig == 0 ? (noteOn):(noteOff); // comparison value based on our note on/off setting
+
+    currentNote == 0 ? (
+        trigTest == onOffStatus ? (
+            slider1 = 0;
+            )
+            );
+            currentNote == 1 ? (
+                trigTest == onOffStatus ? (
+                    slider2 = 0;
+                    )
+                        );
+                    currentNote == 2 ? (
+                        trigTest == onOffStatus ? (
+                            slider3 = 0;
+                           )
+                               ); 
+                            currentNote == 3 ? (
+                                trigTest == onOffStatus ? (
+                                    slider4 = 0;
+                                  )
+                                      ); 
+            );
+            
