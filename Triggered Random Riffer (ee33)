@@ -10,3 +10,24 @@
 //populate 8 rest variables
 
 //on midi trigger: re-roll variables
+
+@init
+ionian = 5000;
+
+ionian[0] = 0;
+ionian[1] = 2;
+ionian[2] = 4;
+ionian[3] = 5;
+ionian[4] = 7;
+ionian[5] = 9;
+ionian[6] = 11;
+
+@block
+rest[0] = tempo/tempo
+rest 
+
+//on midi trigger
+
+note1 = (rootNote + rand(ionian))
+
+//send midi message with note1
