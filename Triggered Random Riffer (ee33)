@@ -1,3 +1,5 @@
+desc:Triggered Random Riffer (ee33)
+
 //pseudocode:
 //drop-down selected array of possible midi note values to use for root note
 //arrays of steps in scale 
@@ -13,23 +15,65 @@
 
 //on midi trigger: re-roll variables
 
-@init
-ionian = 5000;
+slider1:0<0,11,1{C,C#,D,D#,E,F,F#,G,G#,A,A#,B}>Root Note
+slider2:0<0,6,1{Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian}>Mode
 
-ionian[0] = 0;
-ionian[1] = 2;
-ionian[2] = 4;
-ionian[3] = 5;
-ionian[4] = 7;
-ionian[5] = 9;
-ionian[6] = 11;
+in_pin:none
+out_pin:none
+
+@init
+
+octave = 1000;
+
+octave[0] = 0;
+octave [1] = 12;
+octave [2] = 24;
+
+modesList = 2000;
+modesList[0] = #ionian;
+modesList[1] = #dorian;
+
+#ionian = 3000;
+
+#ionian[0] = 0;
+#ionian[1] = 2;
+#ionian[2] = 4;
+#ionian[3] = 5;
+#ionian[4] = 7;
+#ionian[5] = 9;
+#ionian[6] = 11;
+#ionian[7] = 12;
+
+#dorian = 4000;
+
+#dorian[0] = 0;
+#dorian[1] = 2;
+#dorian[2] = 3;
+#dorian[3] = 5;
+#dorian[4] = 7;
+#dorian[5] = 8;
+#dorian[6] = 10;
+#dorian[7] = 12;
+
+@slider
+
+rootNote=slider1+60;
+modeCurrent = modesList[(slider2)];
 
 @block
-rest[0] = tempo/tempo
-rest 
 
 //on midi trigger
 
-note1 = (rootNote + rand(ionian))
+while (midirecv(offset,msg1,msg2,msg3)) (
+
+note1 = rootNote + modeCurrent[rand(8)] + octave[rand(3)];
+
+msg1==$x90 ? (midisend(offset,msg1,note1,msg3*(rand(1))));
+
+msg1==$x80 ? 
+// ch = 0..15
+midisend(ofs, 0xB0 | ch, 123);
+);
+
 
 //send midi message with note1
