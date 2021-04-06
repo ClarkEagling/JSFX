@@ -3,6 +3,8 @@
 //arrays of steps in scale 
 //array of possible note on / note off delays
 
+// tempo stuff : https://forum.cockos.com/showthread.php?t=212592
+
 //loop: 
 //rootnote = slider picks from root note array,
 //populate 8 variables with rootnote + randomly chosen step value (including
