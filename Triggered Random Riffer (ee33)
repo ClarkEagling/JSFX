@@ -16,7 +16,7 @@ desc:Triggered Random Riffer (ee33)
 //on midi trigger: re-roll variables
 
 slider1:0<0,11,1{C,C#,D,D#,E,F,F#,G,G#,A,A#,B}>Root Note
-slider2:0<0,6,1{Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian}>Mode
+slider2:0<0,6,1{ Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian}>Mode
 
 in_pin:none
 out_pin:none
@@ -32,6 +32,11 @@ octave [2] = 24;
 modesList = 2000;
 modesList[0] = #ionian;
 modesList[1] = #dorian;
+modesList[2] = #phrygian;
+modesList[3] = #lydian;
+modesList[4] = #mixolydian;
+modesList[5] = #aeolian;
+modesList[6] = #locrian;
 
 #ionian = 3000;
 
@@ -51,9 +56,64 @@ modesList[1] = #dorian;
 #dorian[2] = 3;
 #dorian[3] = 5;
 #dorian[4] = 7;
-#dorian[5] = 8;
+#dorian[5] = 9;
 #dorian[6] = 10;
 #dorian[7] = 12;
+
+#phrygian = 5000;
+
+#phrygian[0] = 0;
+#phrygian[1] = 1;
+#phrygian[2] = 3;
+#phrygian[3] = 5;
+#phrygian[4] = 7;
+#phrygian[5] = 8;
+#phrygian[6] = 10;
+#phrygian[7] = 12;
+
+#lydian = 6000;
+
+#lydian[0] = 0;
+#lydian[1] = 2;
+#lydian[2] = 4;
+#lydian[3] = 6;
+#lydian[4] = 7;
+#lydian[5] = 9;
+#lydian[6] = 11;
+#lydian[7] = 12;
+
+#mixolydian = 7000;
+
+#mixolydian[0] = 0;
+#mixolydian[1] = 2;
+#mixolydian[2] = 4;
+#mixolydian[3] = 5;
+#mixolydian[4] = 7;
+#mixolydian[5] = 9;
+#mixolydian[6] = 10;
+#mixolydian[7] = 12;
+
+#aeolian = 8000;
+
+#aeolian[0] = 0;
+#aeolian[1] = 2;
+#aeolian[2] = 3;
+#aeolian[3] = 5;
+#aeolian[4] = 7;
+#aeolian[5] = 8;
+#aeolian[6] = 10;
+#aeolian[7] = 12;
+
+#locrian = 9000;
+
+#locrian[0] = 0;
+#locrian[1] = 1;
+#locrian[2] = 3;
+#locrian[3] = 5;
+#locrian[4] = 6;
+#locrian[5] = 8;
+#locrian[6] = 10;
+#locrian[7] = 12;
 
 @slider
 
@@ -66,13 +126,13 @@ modeCurrent = modesList[(slider2)];
 
 while (midirecv(offset,msg1,msg2,msg3)) (
 
-note1 = rootNote + modeCurrent[rand(8)] + octave[rand(3)];
+note1 = rootNote + modeCurrent[rand(8)];
 
 msg1==$x90 ? (midisend(offset,msg1,note1,msg3*(rand(1))));
 
 msg1==$x80 ? 
 // ch = 0..15
-midisend(ofs, 0xB0 | ch, 123);
+midisend(ofs, 0xB0 | ch, 123); // this should be 120 or 123
 );
 
 
