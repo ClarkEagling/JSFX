@@ -29,104 +29,103 @@ octave[0] = 0;
 octave [1] = 12;
 octave [2] = 24;
 
+ionian = 3000;
+dorian = 4000;
+phrygian = 5000;
+lydian = 6000;
+mixolydian = 7000;
+aeolian = 8000;
+locrian = 9000;
+
 modesList = 2000;
-modesList[0] = #ionian;
-modesList[1] = #dorian;
-modesList[2] = #phrygian;
-modesList[3] = #lydian;
-modesList[4] = #mixolydian;
-modesList[5] = #aeolian;
-modesList[6] = #locrian;
+modesList[0] = ionian;
+modesList[1] = dorian;
+modesList[2] = phrygian;
+modesList[3] = lydian;
+modesList[4] = mixolydian;
+modesList[5] = aeolian;
+modesList[6] = locrian;
 
-#ionian = 3000;
+ionian[0] = 0;
+ionian[1] = 2;
+ionian[2] = 4;
+ionian[3] = 5;
+ionian[4] = 7;
+ionian[5] = 9;
+ionian[6] = 11;
+ionian[7] = 12;
 
-#ionian[0] = 0;
-#ionian[1] = 2;
-#ionian[2] = 4;
-#ionian[3] = 5;
-#ionian[4] = 7;
-#ionian[5] = 9;
-#ionian[6] = 11;
-#ionian[7] = 12;
+dorian[0] = 0;
+dorian[1] = 2;
+dorian[2] = 3;
+dorian[3] = 5;
+dorian[4] = 7;
+dorian[5] = 9;
+dorian[6] = 10;
+dorian[7] = 12;
 
-#dorian = 4000;
 
-#dorian[0] = 0;
-#dorian[1] = 2;
-#dorian[2] = 3;
-#dorian[3] = 5;
-#dorian[4] = 7;
-#dorian[5] = 9;
-#dorian[6] = 10;
-#dorian[7] = 12;
+phrygian[0] = 0;
+phrygian[1] = 1;
+phrygian[2] = 3;
+phrygian[3] = 5;
+phrygian[4] = 7;
+phrygian[5] = 8;
+phrygian[6] = 10;
+phrygian[7] = 12;
 
-#phrygian = 5000;
 
-#phrygian[0] = 0;
-#phrygian[1] = 1;
-#phrygian[2] = 3;
-#phrygian[3] = 5;
-#phrygian[4] = 7;
-#phrygian[5] = 8;
-#phrygian[6] = 10;
-#phrygian[7] = 12;
+lydian[0] = 0;
+lydian[1] = 2;
+lydian[2] = 4;
+lydian[3] = 6;
+lydian[4] = 7;
+lydian[5] = 9;
+lydian[6] = 11;
+lydian[7] = 12;
 
-#lydian = 6000;
 
-#lydian[0] = 0;
-#lydian[1] = 2;
-#lydian[2] = 4;
-#lydian[3] = 6;
-#lydian[4] = 7;
-#lydian[5] = 9;
-#lydian[6] = 11;
-#lydian[7] = 12;
+mixolydian[0] = 0;
+mixolydian[1] = 2;
+mixolydian[2] = 4;
+mixolydian[3] = 5;
+mixolydian[4] = 7;
+mixolydian[5] = 9;
+mixolydian[6] = 10;
+mixolydian[7] = 12;
 
-#mixolydian = 7000;
 
-#mixolydian[0] = 0;
-#mixolydian[1] = 2;
-#mixolydian[2] = 4;
-#mixolydian[3] = 5;
-#mixolydian[4] = 7;
-#mixolydian[5] = 9;
-#mixolydian[6] = 10;
-#mixolydian[7] = 12;
+aeolian[0] = 0;
+aeolian[1] = 2;
+aeolian[2] = 3;
+aeolian[3] = 5;
+aeolian[4] = 7;
+aeolian[5] = 8;
+aeolian[6] = 10;
+aeolian[7] = 12;
 
-#aeolian = 8000;
 
-#aeolian[0] = 0;
-#aeolian[1] = 2;
-#aeolian[2] = 3;
-#aeolian[3] = 5;
-#aeolian[4] = 7;
-#aeolian[5] = 8;
-#aeolian[6] = 10;
-#aeolian[7] = 12;
-
-#locrian = 9000;
-
-#locrian[0] = 0;
-#locrian[1] = 1;
-#locrian[2] = 3;
-#locrian[3] = 5;
-#locrian[4] = 6;
-#locrian[5] = 8;
-#locrian[6] = 10;
-#locrian[7] = 12;
+locrian[0] = 0;
+locrian[1] = 1;
+locrian[2] = 3;
+locrian[3] = 5;
+locrian[4] = 6;
+locrian[5] = 8;
+locrian[6] = 10;
+locrian[7] = 12;
 
 @slider
 
-rootNote=slider1+60;
-modeCurrent = modesList[(slider2)];
+rootNote = slider1+60;
 
 @block
+
+modeCurrent = modesList[slider2];
+note1 = rootNote + modeCurrent[rand(8)];
 
 //on midi trigger
 
 while (midirecv(offset,msg1,msg2,msg3)) (
-
-note1 = rootNote + modeCurrent[rand(8)];
 
 msg1==$x90 ? (midisend(offset,msg1,note1,msg3*(rand(1))));
 
