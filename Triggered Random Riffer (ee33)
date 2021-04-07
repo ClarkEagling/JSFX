@@ -17,6 +17,7 @@ desc:Triggered Random Riffer (ee33)
 
 slider1:0<0,11,1{C,C#,D,D#,E,F,F#,G,G#,A,A#,B}>Root Note
 slider2:0<0,6,1{ Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian}>Mode
+slider3:0<0,4,1>Octaves
 
 in_pin:none
 out_pin:none
@@ -26,8 +27,10 @@ out_pin:none
 octave = 1000;
 
 octave[0] = 0;
-octave [1] = 12;
-octave [2] = 24;
+octave[1] = 12;
+octave[2] = 24;
+octave[3] = 36; 
+octave[4] = 48; 
 
 ionian = 3000;
 dorian = 4000;
@@ -116,8 +119,9 @@ locrian[7] = 12;
 
 @slider
 
-rootNote = slider1+60;
+rootNote = slider1+48;
 modeCurrent = modesList[slider2];
+octavesMax = slider3;
 
 @block
 
@@ -127,7 +131,7 @@ while (midirecv(offset,msg1,msg2,msg3))
 (
 msg1==$x90 ? (
 
-note1 = rootNote + modeCurrent[rand(8)];
+note1 = rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
 
 midisend(offset,msg1,note1,msg3*(rand(1)));
 
