@@ -117,21 +117,29 @@ locrian[7] = 12;
 @slider
 
 rootNote = slider1+60;
+modeCurrent = modesList[slider2];
 
 @block
 
-modeCurrent = modesList[slider2];
-note1 = rootNote + modeCurrent[rand(8)];
-
 //on midi trigger
 
-while (midirecv(offset,msg1,msg2,msg3)) (
+while (midirecv(offset,msg1,msg2,msg3)) 
+(
+msg1==$x90 ? (
 
-msg1==$x90 ? (midisend(offset,msg1,note1,msg3*(rand(1))));
+note1 = rootNote + modeCurrent[rand(8)];
+
+midisend(offset,msg1,note1,msg3*(rand(1)));
+
+);
 
 msg1==$x80 ? 
-// ch = 0..15
-midisend(ofs, 0xB0 | ch, 123); // this should be 120 or 123
+
+//(midisend(ofs, 0xB0 | ch, 123); // this should be 120 or 123
+
+(midisend(offset,msg1,note1,msg3));
+
+
 );
 
 
