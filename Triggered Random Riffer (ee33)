@@ -1,6 +1,12 @@
 desc:Triggered Random Riffer (ee33)
 
 //pseudocode:
+// array = 10000; // this is in EEL normal-memory, not string space -- need to make sure it doesn't collide with other memory your script uses
+// mem_set_values(array, "dog", "cat", "mouse");
+// ...
+// gfx_drawstr(array[x]);
+
+
 //drop-down selected array of possible midi note values to use for root note
 //arrays of steps in scale 
 //array of possible note on / note off delays
