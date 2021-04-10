@@ -48,6 +48,7 @@ lydian = 6000;
 mixolydian = 7000;
 aeolian = 8000;
 locrian = 9000;
+notestoPlay = 10000;
 
 modesList = 2000;
 modesList[0] = ionian;
@@ -136,6 +137,7 @@ octavesMax = slider3;
 
 @block
 
+
 //populate new array
 while (midirecv(offset,msg1,msg2,msg3)) ( 
 
@@ -150,36 +152,30 @@ while (midirecv(offset,msg1,msg2,msg3)) (
     note6 = rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
     note7 = rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
     note8 = rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    
-    notestoPlay = 10000;
-    mem_set_values(notestoPlay, note1,note2,note3,note4,note5,note6,note7,note8);
-  
+    note9 = rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    mem_set_values(notestoPlay,note1,note2,note3,note4,note5,note6,note7,note8,note9);
     
     );
 
 
   //on midi trigger
 
-  currentNote == 4 ? (
-
-    playThisNote < 7 ? (
-    
-    noteMsg = notestoplay[playThisNote];
+  //currentNote == 4 ? (
+    playThisNote < 8 ? (
 
       msg1==$x90 ? (
-
-      midisend(offset,msg1,noteMsg,msg3*(rand(1));
+      noteMsg = notestoplay[playThisNote];
+      midisend(offset,msg1,noteMsg,msg3*(rand(1)));
 
       );
 
       msg1==$x80 ? (
-
       midisend(offset,msg1,noteMsg,msg3);
-      playThisNote =+ 1;
+      playThisNote += 1;
       );
       
     );
-    playThisNote == 7 ? (
+    playThisNote == 8 ? (
     
     playThisNote = 0;
     
@@ -187,8 +183,7 @@ while (midirecv(offset,msg1,msg2,msg3)) (
     
   );
   
-);
 
-);
+//);
 
 //send midi message with note1
