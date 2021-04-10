@@ -3,27 +3,6 @@ desc:Triggered Random Riffer (ee33)
 //Reset riff of selected random notes with MIDI note 5
 // tick through riff with MIDI note 4
 
-//pseudocode:
-// array = 10000; // this is in EEL normal-memory, not string space -- need to make sure it doesn't collide with other memory your script uses
-// mem_set_values(array, "dog", "cat", "mouse");
-// ...
-// gfx_drawstr(array[x]);
-
-
-//drop-down selected array of possible midi note values to use for root note
-//arrays of steps in scale 
-//array of possible note on / note off delays
-
-// tempo stuff : https://forum.cockos.com/showthread.php?t=212592
-
-//loop: 
-//rootnote = slider picks from root note array,
-//populate 8 variables with rootnote + randomly chosen step value (including
-//populate 8 note on to note off timing variables
-//populate 8 rest variables
-
-//on midi trigger: re-roll variables
-
 slider1:0<0,11,1{C,C#,D,D#,E,F,F#,G,G#,A,A#,B}>Root Note
 slider2:0<0,6,1{ Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian}>Mode
 slider3:0<0,4,1>Octaves
