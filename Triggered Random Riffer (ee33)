@@ -27,6 +27,7 @@ desc:Triggered Random Riffer (ee33)
 slider1:0<0,11,1{C,C#,D,D#,E,F,F#,G,G#,A,A#,B}>Root Note
 slider2:0<0,6,1{ Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian}>Mode
 slider3:0<0,4,1>Octaves
+slider4: 2<0,7,1{0,4,8,12,16,20,24,28,32}>Loop Length
 
 in_pin:none
 out_pin:none
@@ -134,6 +135,7 @@ playThisNote = 0;
 rootNote = slider1+48;
 modeCurrent = modesList[slider2];
 octavesMax = slider3;
+loopLength = slider4*4;
 
 @block
 
@@ -144,24 +146,47 @@ while (midirecv(offset,msg1,msg2,msg3)) (
   currentNote = msg2;
 
   currentNote == 5 ? (
-    note1 = rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note2 = rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note3 = rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note4 = rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note5 = rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note6 = rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note7 = rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note8 = rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note9 = rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    mem_set_values(notestoPlay,note1,note2,note3,note4,note5,note6,note7,note8,note9);
+    note1  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note2  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note3  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note4  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note5  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note6  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note7  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note8  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note9  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note10  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note11  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note12  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note13  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note14  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note15  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note16  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note17  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note18  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note19  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note20  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note21  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note22  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note23  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note24  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note25  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note26  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note27  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note28  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note29  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note30  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note31  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    note32  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
+    mem_set_values(notestoPlay,note1,note2,note3,note4,note5,note6,note7,note8,note9,note10,note11,note12,note13,note14,note15,note16,note17,note18,note19,note20,note21,note22,note23,note24,note25,note26,note27,note28,note29,note30,note31,note32);
     
     );
 
 
   //on midi trigger
 
-  //currentNote == 4 ? (
-    playThisNote < 8 ? (
+  currentNote == 4 ? (
+    playThisNote < loopLength ? (
 
       msg1==$x90 ? (
       noteMsg = notestoplay[playThisNote];
@@ -175,7 +200,7 @@ while (midirecv(offset,msg1,msg2,msg3)) (
       );
       
     );
-    playThisNote == 8 ? (
+    playThisNote == loopLength ? (
     
     playThisNote = 0;
     
@@ -184,6 +209,6 @@ while (midirecv(offset,msg1,msg2,msg3)) (
   );
   
 
-//);
+);
 
 //send midi message with note1
