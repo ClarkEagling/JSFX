@@ -1,14 +1,16 @@
 desc: KeyHack Generator (ee33)
-//tags: Key Trigger Random Generator
-//author: Robert Randolph hacked by Clark Eagling
+//tags: MIDI Triggered Random Generator
+//Made with code authored by Robert Randolph. Thanks Admiral!
 
-slider1:0<0,127,1>Random Value C8
-slider2:0<0,127,1>Random Value C#8
-slider3:0<0,127,1>Random Value D8
-slider4:0<0,127,1>Random Value D#8
-slider5:0<0,127,1>Random Value E8
-slider6:0<0,127,1>Random Value F8
-slider7:0<0,1,1{Note On, Note Off}>Trigger
+slider1:0<0,127,1>Random Value -- F# -2 Triggers
+slider2:0<0,127,1>Random Value -- G -2 Triggers
+slider3:0<0,127,1>Random Value -- G# -2 Triggers
+slider4:0<0,127,1>Random Value -- A -2 Triggers
+slider5:0<0,127,1>Random Value -- A# -2 Triggers
+slider6:0<0,127,1>Random Value -- B -2 Triggers
+slider7:0<0,127,1>Random Value -- C -1 Triggers
+slider8:0<0,127,1>Random Value -- C# -1 Triggers
+slider9:0<0,1,1{Note On, Note Off}>Trigger
 //slider8:0<0,15,1{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}>Input Channel
 
 in_pin:none
@@ -21,7 +23,7 @@ noteOff = $x80;
 
 @slider
 //inChannel = slider8;
-noteTrig = slider7
+noteTrig = slider9
 
 
 @block
@@ -33,37 +35,49 @@ while (midirecv(offset,msg1,msg2,msg3)) (
 
     trigTest = noteTrig == 0 ? (noteOn):(noteOff); // comparison value based on our note on/off setting
 
-    currentNote == 120 ? (
+    currentNote == 6 ? (
         trigTest == onOffStatus ? (
             slider1 = (rand(127+1-0)+0)&$x7F;
             )
-            );
+        );
             
-            currentNote == 121 ? (
+            currentNote == 7 ? (
                 trigTest == onOffStatus ? (
                     slider2 = (rand(127+1-0)+0)&$x7F;
-                    )
-                        );
-                    currentNote == 122 ? (
+                )
+            );
+                    currentNote == 8 ? (
                         trigTest == onOffStatus ? (
                             slider3 = (rand(127+1-0)+0)&$x7F;
-                           )
-                               ); 
-                            currentNote == 123 ? (
+                        )
+                    ); 
+                            currentNote == 9 ? (
                                 trigTest == onOffStatus ? (
                                     slider4 = (rand(127+1-0)+0)&$x7F;
-                                  )
-                                      );  
-                                    currentNote == 124 ? (
+                                )
+                            );  
+                                    currentNote == 10 ? (
                                         trigTest == onOffStatus ? (
                                             slider5 = (rand(127+1-0)+0)&$x7F;
                                         )
-                                            );    
-                                            currentNote == 125 ? (
+                                    );    
+                                            currentNote == 11 ? (
                                                 trigTest == onOffStatus ? (
                                                     slider6 = (rand(127+1-0)+0)&$x7F;
-        )
-    );
+                                                    
+                                                )
+                                            );
+                                                    currentNote == 12 ? (
+                                                        trigTest == onOffStatus ? (
+                                                            slider7 = (rand(127+1-0)+0)&$x7F;
+                                                        )
+                                                    );    
+                                                            currentNote == 13 ? (
+                                                                trigTest == onOffStatus ? (
+                                                                    slider8 = (rand(127+1-0)+0)&$x7F;
+                                                                    
+                                                                )
+                                                            );
     
-  //  midisend(offset,msg1,msg2,msg3); // pass through
+   midisend(offset,msg1,msg2,msg3); // pass through
 );
