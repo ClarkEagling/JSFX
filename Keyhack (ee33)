@@ -2,14 +2,14 @@ desc: KeyHack Generator (ee33)
 //tags: MIDI Triggered Random Generator
 //Made with code authored by Robert Randolph. Thanks Admiral!
 
-slider1:0<0,127,1>Random Value -- F# -2 Triggers
-slider2:0<0,127,1>Random Value -- G -2 Triggers
-slider3:0<0,127,1>Random Value -- G# -2 Triggers
-slider4:0<0,127,1>Random Value -- A -2 Triggers
-slider5:0<0,127,1>Random Value -- A# -2 Triggers
-slider6:0<0,127,1>Random Value -- B -2 Triggers
-slider7:0<0,127,1>Random Value -- C -1 Triggers
-slider8:0<0,127,1>Random Value -- C# -1 Triggers
+slider1:0<0,127,1>Random Value -- A# -2 Triggers
+slider2:0<0,127,1>Random Value -- B -2 Triggers
+slider3:0<0,127,1>Random Value -- C -2 Triggers
+slider4:0<0,127,1>Random Value -- C# -2 Triggers
+slider5:0<0,127,1>Random Value -- D -2 Triggers
+slider6:0<0,127,1>Random Value -- D# -2 Triggers
+slider7:0<0,127,1>Random Value -- E -1 Triggers
+slider8:0<0,127,1>Random Value -- F -1 Triggers
 slider9:0<0,1,1{Note On, Note Off}>Trigger
 //slider8:0<0,15,1{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}>Input Channel
 
@@ -35,44 +35,44 @@ while (midirecv(offset,msg1,msg2,msg3)) (
 
     trigTest = noteTrig == 0 ? (noteOn):(noteOff); // comparison value based on our note on/off setting
 
-    currentNote == 6 ? (
+    currentNote == 10 ? (
         trigTest == onOffStatus ? (
             slider1 = (rand(127+1-0)+0)&$x7F;
             )
         );
             
-            currentNote == 7 ? (
+            currentNote == 11 ? (
                 trigTest == onOffStatus ? (
                     slider2 = (rand(127+1-0)+0)&$x7F;
                 )
             );
-                    currentNote == 8 ? (
+                    currentNote == 12 ? (
                         trigTest == onOffStatus ? (
                             slider3 = (rand(127+1-0)+0)&$x7F;
                         )
                     ); 
-                            currentNote == 9 ? (
+                            currentNote == 13 ? (
                                 trigTest == onOffStatus ? (
                                     slider4 = (rand(127+1-0)+0)&$x7F;
                                 )
                             );  
-                                    currentNote == 10 ? (
+                                    currentNote == 14 ? (
                                         trigTest == onOffStatus ? (
                                             slider5 = (rand(127+1-0)+0)&$x7F;
                                         )
                                     );    
-                                            currentNote == 11 ? (
+                                            currentNote == 15 ? (
                                                 trigTest == onOffStatus ? (
                                                     slider6 = (rand(127+1-0)+0)&$x7F;
                                                     
                                                 )
                                             );
-                                                    currentNote == 12 ? (
+                                                    currentNote == 16 ? (
                                                         trigTest == onOffStatus ? (
                                                             slider7 = (rand(127+1-0)+0)&$x7F;
                                                         )
                                                     );    
-                                                            currentNote == 13 ? (
+                                                            currentNote == 17 ? (
                                                                 trigTest == onOffStatus ? (
                                                                     slider8 = (rand(127+1-0)+0)&$x7F;
                                                                     

@@ -1,33 +1,15 @@
-desc:Triggered Random Riffer (ee33) -- MIDI note 4 plays, note 5 resets
+desc:Triggered Random Modal Riffer (ee33) -- MIDI note 4 plays, note 5 resets
 
+// tick through root note w / MIDI note 7
+// tick through modes w / MIDI note 6
 //Reset riff of selected random notes with MIDI note 5
 // tick through riff with MIDI note 4
 
-//pseudocode:
-// array = 10000; // this is in EEL normal-memory, not string space -- need to make sure it doesn't collide with other memory your script uses
-// mem_set_values(array, "dog", "cat", "mouse");
-// ...
-// gfx_drawstr(array[x]);
 
-
-//drop-down selected array of possible midi note values to use for root note
-//arrays of steps in scale 
-//array of possible note on / note off delays
-
-// tempo stuff : https://forum.cockos.com/showthread.php?t=212592
-
-//loop: 
-//rootnote = slider picks from root note array,
-//populate 8 variables with rootnote + randomly chosen step value (including
-//populate 8 note on to note off timing variables
-//populate 8 rest variables
-
-//on midi trigger: re-roll variables
-
-slider1:0<0,11,1{C,C#,D,D#,E,F,F#,G,G#,A,A#,B}>Root Note
-slider2:0<0,6,1{ Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian}>Mode
-slider3:0<0,4,1>Octaves
-slider4: 2<0,7,1{0,4,8,12,16,20,24,28,32}>Loop Length
+slider1:0<0,11,1{C,C#,D,D#,E,F,F#,G,G#,A,A#,B}>Root Note (A -2 Cycles)
+slider2:0<0,6,1{ Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian}>Mode (G# -2 Cycles)
+slider3:0<0,4,1>Octaves (G -2 Cycles)
+slider4: 1<0,7,1{0,4,8,12,16,20,24,28,32}>Loop Length (F# -2 Cycles)
 
 in_pin:none
 out_pin:none
@@ -134,26 +116,52 @@ velocities[0] = 0;
 velocities[1] = 0.5;
 velocities[2] = 0.75;
 velocities[3] = 1;
+//velocities[4] = 0.25;
 
 playThisNote = 0;
 thisVelocity = 0;
 
 @slider
 
+
+@block
+
 rootNote = slider1+48;
 modeCurrent = modesList[slider2];
 octavesMax = slider3;
 loopLength = slider4*4;
 
-@block
-
-
 //populate new array
 while (midirecv(offset,msg1,msg2,msg3)) ( 
 
   currentNote = msg2;
-
-  currentNote == 5 ? (
+  
+  currentNote == 9 && msg1==$x90 ? (
+  slider1 += 1;
+  slider1 == 12 ? (
+  slider1 = 0);
+  );
+  
+  currentNote == 8 && msg1==$x90 ? (
+  slider2 += 1;
+  slider2 == 7 ? (
+  slider2 = 0);
+  );
+  
+  
+  currentNote == 7 && msg1==$x90 ? (
+  slider3 += 1;
+  slider3 == 5 ? (
+  slider3 = 0);
+  );
+  
+  currentNote == 6 && msg1==$x90 ? (
+  slider4 += 1;
+  slider4 == 5 ? (
+  slider4 = 1);
+  );
+  
+  currentNote == 5 && msg1==$x90 ? (
     note1  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
     note2  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
     note3  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
@@ -188,6 +196,9 @@ while (midirecv(offset,msg1,msg2,msg3)) (
     note32  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
     mem_set_values(notestoPlay,note1,note2,note3,note4,note5,note6,note7,note8,note9,note10,note11,note12,note13,note14,note15,note16,note17,note18,note19,note20,note21,note22,note23,note24,note25,note26,note27,note28,note29,note30,note31,note32);
    
+    
+    vel1  = velocities[rand(4)];
+    vel2  = velocities[rand(4)];
     vel3  = velocities[rand(4)];
     vel4  = velocities[rand(4)];
     vel5  = velocities[rand(4)];
@@ -240,8 +251,8 @@ while (midirecv(offset,msg1,msg2,msg3)) (
       );
       
     );
-    playThisNote == loopLength ? (
-    
+    playThisNote >= loopLength ? (
+    midisend(offset,msg1,noteMsg,msg3); 
     playThisNote = 0;
     thisVelocity = 0;
     );
