@@ -10,7 +10,7 @@ slider1:0<0,11,1{C,C#,D,D#,E,F,F#,G,G#,A,A#,B}>Root Note (A -2 Cycles)
 slider2:0<0,6,1{ Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian}>Mode (G# -2 Cycles)
 slider3:0<0,4,1>Octaves (G -2 Cycles)
 slider4: 1<0,7,1{0,4,8,12,16,20,24,28,32}>Loop Length (F# -2 Cycles)
-slider5: 1<0,5,1>Empty Space Likelihood
+slider5: 5<0,5,1>Empty Space Likelihood
 
 in_pin:none
 out_pin:none
