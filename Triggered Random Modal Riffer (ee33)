@@ -1,16 +1,21 @@
-desc:Triggered Random Modal Riffer (ee33) -- MIDI note 4 plays, note 5 resets
+desc:Triggered Random Modal Riffer (ee33) -- MIDI note 3 plays, note 4 resets
 
-// tick through root note w / MIDI note 7
-// tick through modes w / MIDI note 6
-//Reset riff of selected random notes with MIDI note 5
-// tick through riff with MIDI note 4
+// tick through root note w / MIDI note 9
+// tick through modes w / MIDI note 8
+// tick through octave range w/ MIDI note 7
+// tick through loop length w / MIDI note6
+// tick through spaciness w / MIDI note5
+
+
+//Reset riff of selected random notes with MIDI note 4
+// tick through riff with MIDI note 3
 
 
 slider1:0<0,11,1{C,C#,D,D#,E,F,F#,G,G#,A,A#,B}>Root Note (A -2 Cycles)
 slider2:0<0,6,1{ Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian}>Mode (G# -2 Cycles)
-slider3:0<0,4,1>Octaves (G -2 Cycles)
-slider4: 1<0,7,1{0,4,8,12,16,20,24,28,32}>Loop Length (F# -2 Cycles)
-slider5: 7<0,7,1>Empty Space Likelihood
+slider3:1<0,4,1>Additional Octave range (G -2 Cycles)
+slider4: 2<0,7,1{0,4,8,12,16,20,24,28,32}>Loop Length (F# -2 Cycles)
+slider5: 10<0,10,1>Empty Space Likelihood (F -2 Cycles)
 
 in_pin:none
 out_pin:none
@@ -63,7 +68,6 @@ dorian[5] = 9;
 dorian[6] = 10;
 dorian[7] = 12;
 
-
 phrygian[0] = 0;
 phrygian[1] = 1;
 phrygian[2] = 3;
@@ -72,7 +76,6 @@ phrygian[4] = 7;
 phrygian[5] = 8;
 phrygian[6] = 10;
 phrygian[7] = 12;
-
 
 lydian[0] = 0;
 lydian[1] = 2;
@@ -83,7 +86,6 @@ lydian[5] = 9;
 lydian[6] = 11;
 lydian[7] = 12;
 
-
 mixolydian[0] = 0;
 mixolydian[1] = 2;
 mixolydian[2] = 4;
@@ -93,7 +95,6 @@ mixolydian[5] = 9;
 mixolydian[6] = 10;
 mixolydian[7] = 12;
 
-
 aeolian[0] = 0;
 aeolian[1] = 2;
 aeolian[2] = 3;
@@ -102,7 +103,6 @@ aeolian[4] = 7;
 aeolian[5] = 8;
 aeolian[6] = 10;
 aeolian[7] = 12;
-
 
 locrian[0] = 0;
 locrian[1] = 1;
@@ -122,13 +122,11 @@ velocities[5] = 0;
 velocities[6] = 0;
 velocities[7] = 0;
 velocities[8] = 0;
-velocities[9] = 0.25;
+velocities[9] = 0;
+velocities[10] = 0.25;
 
 playThisNote = 0;
 thisVelocity = 0;
-
-@slider
-
 
 @block
 
@@ -138,37 +136,45 @@ octavesMax = slider3;
 loopLength = slider4*4;
 spaceLike = slider5+3;
 
-//populate new array
+//this code adjusts the sliders on MIDI trigger
+
 while (midirecv(offset,msg1,msg2,msg3)) ( 
 
   currentNote = msg2;
   
   currentNote == 9 && msg1==$x90 ? (
-  slider1 += 1;
-  slider1 == 12 ? (
-  slider1 = 0);
+    slider1 += 1;
+    slider1 == 12 ? (
+      slider1 = 0);
   );
   
   currentNote == 8 && msg1==$x90 ? (
-  slider2 += 1;
-  slider2 == 7 ? (
-  slider2 = 0);
+    slider2 += 1;
+    slider2 == 7 ? (
+      slider2 = 0);
   );
   
-  
   currentNote == 7 && msg1==$x90 ? (
-  slider3 += 1;
-  slider3 == 5 ? (
-  slider3 = 0);
+    slider3 += 1;
+    slider3 == 5 ? (
+      slider3 = 0);
   );
   
   currentNote == 6 && msg1==$x90 ? (
-  slider4 += 1;
-  slider4 == 5 ? (
-  slider4 = 1);
+    slider4 += 1;
+    slider4 == 5 ? (
+      slider4 = 1);
   );
   
   currentNote == 5 && msg1==$x90 ? (
+    slider5 += 1;
+    slider5 == 11 ? (
+      slider5 = 1);
+  );
+  
+  // This code creates the riff
+  
+  currentNote == 4 && msg1==$x90 ? (
     note1  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
     note2  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
     note3  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
@@ -202,47 +208,46 @@ while (midirecv(offset,msg1,msg2,msg3)) (
     note31  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
     note32  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
     mem_set_values(notestoPlay,note1,note2,note3,note4,note5,note6,note7,note8,note9,note10,note11,note12,note13,note14,note15,note16,note17,note18,note19,note20,note21,note22,note23,note24,note25,note26,note27,note28,note29,note30,note31,note32);
-   
-    
-vel1  = velocities[rand(spaceLike)];
-vel2  = velocities[rand(spaceLike)];
-vel3  = velocities[rand(spaceLike)];
-vel4  = velocities[rand(spaceLike)];
-vel5  = velocities[rand(spaceLike)];
-vel6  = velocities[rand(spaceLike)];
-vel7  = velocities[rand(spaceLike)];
-vel8  = velocities[rand(spaceLike)];
-vel9  = velocities[rand(spaceLike)];
-vel10  = velocities[rand(spaceLike)];
-vel11  = velocities[rand(spaceLike)];
-vel12  = velocities[rand(spaceLike)];
-vel13  = velocities[rand(spaceLike)];
-vel14  = velocities[rand(spaceLike)];
-vel15  = velocities[rand(spaceLike)];
-vel16  = velocities[rand(spaceLike)];
-vel17  = velocities[rand(spaceLike)];
-vel18  = velocities[rand(spaceLike)];
-vel19  = velocities[rand(spaceLike)];
-vel20  = velocities[rand(spaceLike)];
-vel21  = velocities[rand(spaceLike)];
-vel22  = velocities[rand(spaceLike)];
-vel23  = velocities[rand(spaceLike)];
-vel24  = velocities[rand(spaceLike)];
-vel25  = velocities[rand(spaceLike)];
-vel26  = velocities[rand(spaceLike)];
-vel27  = velocities[rand(spaceLike)];
-vel28  = velocities[rand(spaceLike)];
-vel29  = velocities[rand(spaceLike)];
-vel30  = velocities[rand(spaceLike)];
-vel31  = velocities[rand(spaceLike)];
-vel32  = velocities[rand(spaceLike)];
+
+    vel1  = velocities[rand(spaceLike)];
+    vel2  = velocities[rand(spaceLike)];
+    vel3  = velocities[rand(spaceLike)];
+    vel4  = velocities[rand(spaceLike)];
+    vel5  = velocities[rand(spaceLike)];
+    vel6  = velocities[rand(spaceLike)];
+    vel7  = velocities[rand(spaceLike)];
+    vel8  = velocities[rand(spaceLike)];
+    vel9  = velocities[rand(spaceLike)];
+    vel10  = velocities[rand(spaceLike)];
+    vel11  = velocities[rand(spaceLike)];
+    vel12  = velocities[rand(spaceLike)];
+    vel13  = velocities[rand(spaceLike)];
+    vel14  = velocities[rand(spaceLike)];
+    vel15  = velocities[rand(spaceLike)];
+    vel16  = velocities[rand(spaceLike)];
+    vel17  = velocities[rand(spaceLike)];
+    vel18  = velocities[rand(spaceLike)];
+    vel19  = velocities[rand(spaceLike)];
+    vel20  = velocities[rand(spaceLike)];
+    vel21  = velocities[rand(spaceLike)];
+    vel22  = velocities[rand(spaceLike)];
+    vel23  = velocities[rand(spaceLike)];
+    vel24  = velocities[rand(spaceLike)];
+    vel25  = velocities[rand(spaceLike)];
+    vel26  = velocities[rand(spaceLike)];
+    vel27  = velocities[rand(spaceLike)];
+    vel28  = velocities[rand(spaceLike)];
+    vel29  = velocities[rand(spaceLike)];
+    vel30  = velocities[rand(spaceLike)];
+    vel31  = velocities[rand(spaceLike)];
+    vel32  = velocities[rand(spaceLike)];
     mem_set_values(velForNote,vel1,vel2,vel3,vel4,vel5,vel6,vel7,vel8,vel9,vel10,vel11,vel12,vel13,vel14,vel15,vel16,vel17,vel18,vel19,vel20,vel21,vel22,vel23,vel24,vel25,vel26,vel27,vel28,vel29,vel30,vel31,vel32);
     );
 
 
-  //on midi trigger
+// This code plays the riff
 
-  currentNote == 4 ? (
+  currentNote == 3 ? (
     playThisNote < loopLength ? (
 
       msg1==$x90 ? (
@@ -265,8 +270,5 @@ vel32  = velocities[rand(spaceLike)];
     );
     
   );
-  
 
 );
-
-//send midi message with note1
