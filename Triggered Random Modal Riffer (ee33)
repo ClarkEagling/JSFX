@@ -156,7 +156,7 @@ while (midirecv(offset,msg1,msg2,msg3)) (
   
   currentNote == 7 && msg1==$x90 ? (
     slider3 += 1;
-    slider3 == 5 ? (
+    slider3 == 4 ? (
       slider3 = 0);
   );
   
