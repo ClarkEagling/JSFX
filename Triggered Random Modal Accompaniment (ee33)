@@ -15,7 +15,7 @@ slider1:0<0,11,1{C,C#,D,D#,E,F,F#,G,G#,A,A#,B}>Root Note (A -2 Cycles)
 slider2:0<0,6,1{ Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian}>Mode (G# -2 Cycles)
 slider3:1<0,4,1>Additional Octave range (G -2 Cycles)
 slider4: 2<0,7,1{0,4,8,12,16,20,24,28,32}>Loop Length (F# -2 Cycles)
-slider5: 10<0,10,1>Empty Space Likelihood (F -2 Cycles)
+slider5: 8<0,10,1>Empty Space Likelihood (F -2 Cycles)
 
 in_pin:none
 out_pin:none
@@ -130,7 +130,7 @@ thisVelocity = 0;
 
 @block
 
-rootNote = slider1+48;
+rootNote = slider1+24;
 modeCurrent = modesList[slider2];
 octavesMax = slider3;
 loopLength = slider4*4;
@@ -162,8 +162,8 @@ while (midirecv(offset,msg1,msg2,msg3)) (
   
   currentNote == 6 && msg1==$x90 ? (
     slider4 += 1;
-    slider4 == 5 ? (
-      slider4 = 1);
+    slider4 == 6 ? (
+      slider4 = 2);
   );
   
   currentNote == 5 && msg1==$x90 ? (

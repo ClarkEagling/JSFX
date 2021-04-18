@@ -162,8 +162,8 @@ while (midirecv(offset,msg1,msg2,msg3)) (
   
   currentNote == 6 && msg1==$x90 ? (
     slider4 += 1;
-    slider4 == 5 ? (
-      slider4 = 1);
+    slider4 == 6 ? (
+      slider4 = 2);
   );
   
   currentNote == 5 && msg1==$x90 ? (
