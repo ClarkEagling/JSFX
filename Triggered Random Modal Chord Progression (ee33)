@@ -1,4 +1,4 @@
-desc:Triggered Random Modal Chord Progression(ee33) -- MIDI note 0 plays, note 1 resets
+desc:Triggered Random Modal Chord Progression(ee33) -- MIDI note 2 makes riff, note 1 plays riff, note 0 plays tonic
 
 // tick through root note w / MIDI note 9
 // tick through modes w / MIDI note 8
@@ -8,8 +8,9 @@ desc:Triggered Random Modal Chord Progression(ee33) -- MIDI note 0 plays, note 1
 // tick through chord interval 1 w / MIDI note 4
 // tick through chord interval 1 w / MIDI note 3
 
-//Reset riff of selected random notes with MIDI note 1
-// tick through riff with MIDI note 0
+//Reset riff of selected random notes with MIDI note 2
+// tick through riff with MIDI note 1
+//play tonic with note 1
 
 
 slider1:0<0,11,1{C,C#,D,D#,E,F,F#,G,G#,A,A#,B}>Root Note (A -2 Cycles)
@@ -199,6 +200,10 @@ spaceLike = slider5+3;
 scaleStep1 = slider6;
 scaleStep2 = slider7;
 
+tonic = rootNote + octave[rand(octavesMax)];
+tonicB = rootNote + modeCurrent[3] + octave[rand(octavesMax)];
+tonicC = rootNote + modeCurrent[5] + octave[rand(octavesMax)];
+
 //this code adjusts the sliders on MIDI trigger
 
 while (midirecv(offset,msg1,msg2,msg3)) ( 
@@ -249,7 +254,9 @@ while (midirecv(offset,msg1,msg2,msg3)) (
   
   // This code creates the riff
   
-  currentNote == 1 && msg1==$x90 ? (
+  currentNote == 2 && msg1==$x90 ? (
+  
+
 seed1   =rand(8);  note1  =rootNote + modeCurrent[seed1] + octave[rand(octavesMax)];  noteB1  =rootNote + modeCurrent[seed1+scaleStep1] + octave[rand(octavesMax)];  noteC1  =rootNote + modeCurrent[seed1+scaleStep2] + octave[rand(octavesMax)];
 seed2  =rand(8);  note2  =rootNote + modeCurrent[seed2] + octave[rand(octavesMax)];  noteB2  =rootNote + modeCurrent[seed2+scaleStep1] + octave[rand(octavesMax)];  noteC2  =rootNote + modeCurrent[seed2+scaleStep2] + octave[rand(octavesMax)];
 seed3  =rand(8);  note3  =rootNote + modeCurrent[seed3] + octave[rand(octavesMax)];  noteB3  =rootNote + modeCurrent[seed3+scaleStep1] + octave[rand(octavesMax)];  noteC3  =rootNote + modeCurrent[seed3+scaleStep2] + octave[rand(octavesMax)];
@@ -324,7 +331,7 @@ seed32  =rand(8);  note32  =rootNote + modeCurrent[seed32] + octave[rand(octaves
 
 // This code plays the riff
 
-  currentNote == 0 ? (
+  currentNote == 1 ? (
     playThisNote < loopLength ? (
 
       msg1==$x90 ? (
@@ -353,5 +360,23 @@ seed32  =rand(8);  note32  =rootNote + modeCurrent[seed32] + octave[rand(octaves
     );
     
   );
+  
+  currentNote == 0 ? (
+  
+      msg1==$x90 ? (
+      midisend(offset,msg1,tonic,msg3*rand(0));
+      midisend(offset,msg1,tonicB,msg3*rand(0));
+      midisend(offset,msg1,tonicC,msg3*rand(0));
+      );
+  
+      msg1==$x80 ? (
+      midisend(offset,msg1,tonic,msg3);
+      midisend(offset,msg1,tonicB,msg3);
+      midisend(offset,msg1,tonicC,msg3);
+      playThisNote += 1;
+      thisVelocity += 1;
+      );
+      
+    );
 
 );
