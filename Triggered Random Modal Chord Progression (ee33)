@@ -355,11 +355,15 @@ seed32  =rand(8);  note32  =rootNote + modeCurrent[seed32] + octave[rand(octaves
     );
     playThisNote >= loopLength ? (
     midisend(offset,msg1,noteMsg,msg3); 
+    midisend(offset,msg1,noteMsgB,msg3);
+    midisend(offset,msg1,noteMsgC,msg3);
     playThisNote = 0;
     thisVelocity = 0;
     );
     
   );
+  
+  //this code plays the tonic
   
   currentNote == 0 ? (
   
@@ -373,8 +377,8 @@ seed32  =rand(8);  note32  =rootNote + modeCurrent[seed32] + octave[rand(octaves
       midisend(offset,msg1,tonic,msg3);
       midisend(offset,msg1,tonicB,msg3);
       midisend(offset,msg1,tonicC,msg3);
-      playThisNote += 1;
-      thisVelocity += 1;
+     // playThisNote += 1;
+    //  thisVelocity += 1;
       );
       
     );

@@ -1,21 +1,24 @@
-desc:Triggered Random Modal Accompaniment (ee33) -- MIDI note 3 plays, note 4 resets
+desc:Triggered Random Modal Accompaniment (ee33) -- MIDI note 2 makes riff, note 1 plays riff, note 0 plays tonic
 
 // tick through root note w / MIDI note 9
 // tick through modes w / MIDI note 8
 // tick through octave range w/ MIDI note 7
-// tick through loop length w / MIDI note6
-// tick through spaciness w / MIDI note5
+// tick through loop length w / MIDI note 6
+// tick through spaciness w / MIDI note 5
 
 
-//Reset riff of selected random notes with MIDI note 4
-// tick through riff with MIDI note 3
+//Reset riff of selected random notes with MIDI note 2
+// tick through riff with MIDI note 1
+//play tonic with note 1
 
 
 slider1:0<0,11,1{C,C#,D,D#,E,F,F#,G,G#,A,A#,B}>Root Note (A -2 Cycles)
 slider2:0<0,6,1{ Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian}>Mode (G# -2 Cycles)
-slider3:1<0,4,1>Additional Octave range (G -2 Cycles)
+slider3:1<0,2,1>Additional Octave range (G -2 Cycles)
 slider4: 2<0,7,1{0,4,8,12,16,20,24,28,32}>Loop Length (F# -2 Cycles)
-slider5: 8<0,10,1>Empty Space Likelihood (F -2 Cycles)
+slider5: 10<0,10,1>Empty Space Likelihood (F -2 Cycles)
+//slider6: 3<<0,7,1>Chord Interval 1 (E -2 Cycles)
+//slider7: 5<0,7,1>Chord Interval 2 (D# -2 Cycles)
 
 in_pin:none
 out_pin:none
@@ -38,6 +41,7 @@ mixolydian = 7000;
 aeolian = 8000;
 locrian = 9000;
 notestoPlay = 10000;
+notestoPlayB = 13000;
 velocities = 11000;
 velForNote = 12000;
 
@@ -53,65 +57,122 @@ modesList[6] = locrian;
 ionian[0] = 0;
 ionian[1] = 0;
 ionian[2] = 4;
-ionian[3] = 4;
+ionian[3] = 5;
 ionian[4] = 7;
 ionian[5] = 7;
-ionian[6] = 11;
-ionian[7] = 11;
+ionian[6] = 4;
+ionian[7] = 12;
+ionian[8] = 14;
+ionian[9] = 16;
+ionian[10] = 17;
+ionian[11] = 19;
+ionian[12] = 21;
+ionian[13] = 23;
+ionian[14] = 24;
+ionian[15] = 26;
+
 
 dorian[0] = 0;
 dorian[1] = 0;
-dorian[2] = 3;
-dorian[3] = 3;
+dorian[2] = 5;
+dorian[3] = 5;
 dorian[4] = 7;
 dorian[5] = 7;
-dorian[6] = 10;
-dorian[7] = 10;
+dorian[6] = 9;
+dorian[7] = 12;
+dorian[8]  =  14  ;
+dorian[9]  =  15  ;
+dorian[10]  =  17  ;
+dorian[11]  =  19  ;
+dorian[12]  =  21  ;
+dorian[13]  =  22  ;
+dorian[14]  =  24  ;
+dorian[15]  =  26  ;
 
 phrygian[0] = 0;
 phrygian[1] = 0;
-phrygian[2] = 3;
-phrygian[3] = 3;
+phrygian[2] = 5;
+phrygian[3] = 5;
 phrygian[4] = 7;
 phrygian[5] = 7;
 phrygian[6] = 10;
-phrygian[7] = 10;
+phrygian[7] = 12;
+phrygian[8] = 13;
+phrygian[9] = 15;
+phrygian[10] = 17;
+phrygian[11] = 19;
+phrygian[12] = 20;
+phrygian[13] = 22;
+phrygian[14] = 24;
+phrygian[15]  =  25  ;
 
 lydian[0] = 0;
 lydian[1] = 0;
 lydian[2] = 4;
 lydian[3] = 4;
 lydian[4] = 7;
-lydian[5] = 7;
-lydian[6] = 11;
-lydian[7] = 11;
+lydian[5] = 9;
+lydian[6] = 7;
+lydian[7] = 12;
+lydian[8]=14;
+lydian[9]=16;
+lydian[10]=18;
+lydian[11]=19;
+lydian[12]=21;
+lydian[13]=23;
+lydian[14]=24;
+lydian[15]  =  26  ;
 
 mixolydian[0] = 0;
 mixolydian[1] = 0;
-mixolydian[2] = 4;
-mixolydian[3] = 4;
+mixolydian[2] = 5;
+mixolydian[3] = 5;
 mixolydian[4] = 7;
-mixolydian[5] = 7;
-mixolydian[6] = 10;
-mixolydian[7] = 10;
+mixolydian[5] = 9;
+mixolydian[6] = 7;
+mixolydian[7] = 12;
+mixolydian[8]=14;
+mixolydian[9]=16;
+mixolydian[10]=17;
+mixolydian[11]=19;
+mixolydian[12]=21;
+mixolydian[13]=22;
+mixolydian[14]=24;
+mixolydian[15]  =  26  ;
 
 aeolian[0] = 0;
 aeolian[1] = 0;
-aeolian[2] = 3;
-aeolian[3] = 3;
+aeolian[2] = 5;
+aeolian[3] = 5;
 aeolian[4] = 7;
 aeolian[5] = 7;
 aeolian[6] = 10;
-aeolian[7] = 10;
+aeolian[7] = 12;
+aeolian[8]=14;
+aeolian[9]=15;
+aeolian[10]=17;
+aeolian[11]=19;
+aeolian[12]=20;
+aeolian[13]=22;
+aeolian[14]=24;
+aeolian[15]  =  26  ;
 
 locrian[0] = 0;
 locrian[1] = 0;
-locrian[2] = 3;
-locrian[3] = 3;
-locrian[4] = 6;
-locrian[5] = 6;
+locrian[2] = 5;
+locrian[3] = 5;
+locrian[4] = 8;
+locrian[5] = 8;
 locrian[6] = 10;
-locrian[7] = 10;
+locrian[7] = 12;
+locrian[8]=13;
+locrian[9]=15;
+locrian[10]=17;
+locrian[11]=18;
+locrian[12]=20;
+locrian[13]=22;
+locrian[14]=24;
+locrian[15]  =  25  ;
 
 velocities[0] = 0.5;
 velocities[1] = 0.75;
@@ -130,11 +191,17 @@ thisVelocity = 0;
 
 @block
 
-rootNote = slider1+24;
+rootNote = slider1+36;
 modeCurrent = modesList[slider2];
 octavesMax = slider3;
 loopLength = slider4*4;
 spaceLike = slider5+3;
+//scaleStep1 = slider6;
+//scaleStep2 = slider7;
+
+tonic = rootNote + octave[rand(octavesMax)];
+//tonicB = rootNote + modeCurrent[3] + octave[rand(octavesMax)];
+//tonicC = rootNote + modeCurrent[5] + octave[rand(octavesMax)];
 
 //this code adjusts the sliders on MIDI trigger
 
@@ -156,7 +223,7 @@ while (midirecv(offset,msg1,msg2,msg3)) (
   
   currentNote == 7 && msg1==$x90 ? (
     slider3 += 1;
-    slider3 == 5 ? (
+    slider3 == 3 ? (
       slider3 = 0);
   );
   
@@ -172,43 +239,59 @@ while (midirecv(offset,msg1,msg2,msg3)) (
       slider5 = 1);
   );
   
+  currentNote == 4 && msg1==$x90 ? (
+    slider6 += 1;
+    slider6 == 8 ? (
+      slider6 = 1);
+  );
+  
+  currentNote == 3 && msg1==$x90 ? (
+    slider7 += 1;
+    slider7 == 8 ? (
+      slider7 = 1);
+  );
+  
   // This code creates the riff
   
-  currentNote == 4 && msg1==$x90 ? (
-    note1  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note2  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note3  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note4  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note5  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note6  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note7  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note8  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note9  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note10  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note11  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note12  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note13  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note14  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note15  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note16  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note17  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note18  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note19  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note20  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note21  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note22  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note23  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note24  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note25  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note26  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note27  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note28  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note29  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note30  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note31  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    note32  =rootNote + modeCurrent[rand(8)] + octave[rand(octavesMax)];
-    mem_set_values(notestoPlay,note1,note2,note3,note4,note5,note6,note7,note8,note9,note10,note11,note12,note13,note14,note15,note16,note17,note18,note19,note20,note21,note22,note23,note24,note25,note26,note27,note28,note29,note30,note31,note32);
+  currentNote == 2 && msg1==$x90 ? (
+  
 
+seed1   =rand(8);  note1  =rootNote + modeCurrent[seed1] + octave[rand(octavesMax)];//  noteB1  =rootNote + modeCurrent[seed1+scaleStep1] + octave[rand(octavesMax)];  noteC1  =rootNote + modeCurrent[seed1+scaleStep2] + octave[rand(octavesMax)];
+seed2  =rand(8);  note2  =rootNote + modeCurrent[seed2] + octave[rand(octavesMax)];//  noteB2  =rootNote + modeCurrent[seed2+scaleStep1] + octave[rand(octavesMax)];  noteC2  =rootNote + modeCurrent[seed2+scaleStep2] + octave[rand(octavesMax)];
+seed3  =rand(8);  note3  =rootNote + modeCurrent[seed3] + octave[rand(octavesMax)];//  noteB3  =rootNote + modeCurrent[seed3+scaleStep1] + octave[rand(octavesMax)];  noteC3  =rootNote + modeCurrent[seed3+scaleStep2] + octave[rand(octavesMax)];
+seed4  =rand(8);  note4  =rootNote + modeCurrent[seed4] + octave[rand(octavesMax)]; // noteB4  =rootNote + modeCurrent[seed4+scaleStep1] + octave[rand(octavesMax)];  noteC4  =rootNote + modeCurrent[seed4+scaleStep2] + octave[rand(octavesMax)];
+seed5  =rand(8);  note5  =rootNote + modeCurrent[seed5] + octave[rand(octavesMax)];//  noteB5  =rootNote + modeCurrent[seed5+scaleStep1] + octave[rand(octavesMax)];  noteC5  =rootNote + modeCurrent[seed5+scaleStep2] + octave[rand(octavesMax)];
+seed6  =rand(8);  note6  =rootNote + modeCurrent[seed6] + octave[rand(octavesMax)];//  noteB6  =rootNote + modeCurrent[seed6+scaleStep1] + octave[rand(octavesMax)];  noteC6  =rootNote + modeCurrent[seed6+scaleStep2] + octave[rand(octavesMax)];
+seed7  =rand(8);  note7  =rootNote + modeCurrent[seed7] + octave[rand(octavesMax)]; // noteB7  =rootNote + modeCurrent[seed7+scaleStep1] + octave[rand(octavesMax)];  noteC7  =rootNote + modeCurrent[seed7+scaleStep2] + octave[rand(octavesMax)];
+seed8  =rand(8);  note8  =rootNote + modeCurrent[seed8] + octave[rand(octavesMax)]; // noteB8  =rootNote + modeCurrent[seed8+scaleStep1] + octave[rand(octavesMax)];  noteC8  =rootNote + modeCurrent[seed8+scaleStep2] + octave[rand(octavesMax)];
+seed9  =rand(8);  note9  =rootNote + modeCurrent[seed9] + octave[rand(octavesMax)];//  noteB9  =rootNote + modeCurrent[seed9+scaleStep1] + octave[rand(octavesMax)];  noteC9  =rootNote + modeCurrent[seed9+scaleStep2] + octave[rand(octavesMax)];
+seed10  =rand(8);  note10  =rootNote + modeCurrent[seed10] + octave[rand(octavesMax)]; // noteB10  =rootNote + modeCurrent[seed10+scaleStep1] + octave[rand(octavesMax)];  noteC10  =rootNote + modeCurrent[seed10+scaleStep2] + octave[rand(octavesMax)];
+seed11  =rand(8);  note11  =rootNote + modeCurrent[seed11] + octave[rand(octavesMax)]; // noteB11  =rootNote + modeCurrent[seed11+scaleStep1] + octave[rand(octavesMax)];  noteC11  =rootNote + modeCurrent[seed11+scaleStep2] + octave[rand(octavesMax)];
+seed12  =rand(8);  note12  =rootNote + modeCurrent[seed12] + octave[rand(octavesMax)]; // noteB12  =rootNote + modeCurrent[seed12+scaleStep1] + octave[rand(octavesMax)];  noteC12  =rootNote + modeCurrent[seed12+scaleStep2] + octave[rand(octavesMax)];
+seed13  =rand(8);  note13  =rootNote + modeCurrent[seed13] + octave[rand(octavesMax)];//  noteB13  =rootNote + modeCurrent[seed13+scaleStep1] + octave[rand(octavesMax)];  noteC13  =rootNote + modeCurrent[seed13+scaleStep2] + octave[rand(octavesMax)];
+seed14  =rand(8);  note14  =rootNote + modeCurrent[seed14] + octave[rand(octavesMax)];//  noteB14  =rootNote + modeCurrent[seed14+scaleStep1] + octave[rand(octavesMax)];  noteC14  =rootNote + modeCurrent[seed14+scaleStep2] + octave[rand(octavesMax)];
+seed15  =rand(8);  note15  =rootNote + modeCurrent[seed15] + octave[rand(octavesMax)];//  noteB15  =rootNote + modeCurrent[seed15+scaleStep1] + octave[rand(octavesMax)];  noteC15  =rootNote + modeCurrent[seed15+scaleStep2] + octave[rand(octavesMax)];
+seed16  =rand(8);  note16  =rootNote + modeCurrent[seed16] + octave[rand(octavesMax)]; // noteB16  =rootNote + modeCurrent[seed16+scaleStep1] + octave[rand(octavesMax)];  noteC16  =rootNote + modeCurrent[seed16+scaleStep2] + octave[rand(octavesMax)];
+seed17  =rand(8);  note17  =rootNote + modeCurrent[seed17] + octave[rand(octavesMax)];//  noteB17  =rootNote + modeCurrent[seed17+scaleStep1] + octave[rand(octavesMax)];  noteC17  =rootNote + modeCurrent[seed17+scaleStep2] + octave[rand(octavesMax)];
+seed18  =rand(8);  note18  =rootNote + modeCurrent[seed18] + octave[rand(octavesMax)];//  noteB18  =rootNote + modeCurrent[seed18+scaleStep1] + octave[rand(octavesMax)];  noteC18  =rootNote + modeCurrent[seed18+scaleStep2] + octave[rand(octavesMax)];
+seed19  =rand(8);  note19  =rootNote + modeCurrent[seed19] + octave[rand(octavesMax)]; // noteB19  =rootNote + modeCurrent[seed19+scaleStep1] + octave[rand(octavesMax)];  noteC19  =rootNote + modeCurrent[seed19+scaleStep2] + octave[rand(octavesMax)];
+seed20  =rand(8);  note20  =rootNote + modeCurrent[seed20] + octave[rand(octavesMax)];//  noteB20  =rootNote + modeCurrent[seed20+scaleStep1] + octave[rand(octavesMax)];  noteC20  =rootNote + modeCurrent[seed20+scaleStep2] + octave[rand(octavesMax)];
+seed21  =rand(8);  note21  =rootNote + modeCurrent[seed21] + octave[rand(octavesMax)]; // noteB21  =rootNote + modeCurrent[seed21+scaleStep1] + octave[rand(octavesMax)];  noteC21  =rootNote + modeCurrent[seed21+scaleStep2] + octave[rand(octavesMax)];
+seed22  =rand(8);  note22  =rootNote + modeCurrent[seed22] + octave[rand(octavesMax)];//  noteB22  =rootNote + modeCurrent[seed22+scaleStep1] + octave[rand(octavesMax)];  noteC22  =rootNote + modeCurrent[seed22+scaleStep2] + octave[rand(octavesMax)];
+seed23  =rand(8);  note23  =rootNote + modeCurrent[seed23] + octave[rand(octavesMax)];//  noteB23  =rootNote + modeCurrent[seed23+scaleStep1] + octave[rand(octavesMax)];  noteC23  =rootNote + modeCurrent[seed23+scaleStep2] + octave[rand(octavesMax)];
+seed24  =rand(8);  note24  =rootNote + modeCurrent[seed24] + octave[rand(octavesMax)]; // noteB24  =rootNote + modeCurrent[seed24+scaleStep1] + octave[rand(octavesMax)];  noteC24  =rootNote + modeCurrent[seed24+scaleStep2] + octave[rand(octavesMax)];
+seed25  =rand(8);  note25  =rootNote + modeCurrent[seed25] + octave[rand(octavesMax)]; // noteB25  =rootNote + modeCurrent[seed25+scaleStep1] + octave[rand(octavesMax)];  noteC25  =rootNote + modeCurrent[seed25+scaleStep2] + octave[rand(octavesMax)];
+seed26  =rand(8);  note26  =rootNote + modeCurrent[seed26] + octave[rand(octavesMax)]; // noteB26  =rootNote + modeCurrent[seed26+scaleStep1] + octave[rand(octavesMax)];  noteC26  =rootNote + modeCurrent[seed26+scaleStep2] + octave[rand(octavesMax)];
+seed27  =rand(8);  note27  =rootNote + modeCurrent[seed27] + octave[rand(octavesMax)];//  noteB27  =rootNote + modeCurrent[seed27+scaleStep1] + octave[rand(octavesMax)];  noteC27  =rootNote + modeCurrent[seed27+scaleStep2] + octave[rand(octavesMax)];
+seed28  =rand(8);  note28  =rootNote + modeCurrent[seed28] + octave[rand(octavesMax)]; // noteB28  =rootNote + modeCurrent[seed28+scaleStep1] + octave[rand(octavesMax)];  noteC28  =rootNote + modeCurrent[seed28+scaleStep2] + octave[rand(octavesMax)];
+seed29  =rand(8);  note29  =rootNote + modeCurrent[seed29] + octave[rand(octavesMax)];//  noteB29  =rootNote + modeCurrent[seed29+scaleStep1] + octave[rand(octavesMax)];  noteC29  =rootNote + modeCurrent[seed29+scaleStep2] + octave[rand(octavesMax)];
+seed30  =rand(8);  note30  =rootNote + modeCurrent[seed30] + octave[rand(octavesMax)];//  noteB30  =rootNote + modeCurrent[seed30+scaleStep1] + octave[rand(octavesMax)];  noteC30  =rootNote + modeCurrent[seed30+scaleStep2] + octave[rand(octavesMax)];
+seed31  =rand(8);  note31  =rootNote + modeCurrent[seed31] + octave[rand(octavesMax)]; // noteB31  =rootNote + modeCurrent[seed31+scaleStep1] + octave[rand(octavesMax)];  noteC31  =rootNote + modeCurrent[seed31+scaleStep2] + octave[rand(octavesMax)];
+seed32  =rand(8);  note32  =rootNote + modeCurrent[seed32] + octave[rand(octavesMax)];//  noteB32  =rootNote + modeCurrent[seed32+scaleStep1] + octave[rand(octavesMax)];  noteC32  =rootNote + modeCurrent[seed32+scaleStep2] + octave[rand(octavesMax)];
+
+    mem_set_values(notestoPlay,note1,note2,note3,note4,note5,note6,note7,note8,note9,note10,note11,note12,note13,note14,note15,note16,note17,note18,note19,note20,note21,note22,note23,note24,note25,note26,note27,note28,note29,note30,note31,note32);
+//    mem_set_values(notestoPlayB,noteB1,noteB2,noteB3,noteB4,noteB5,noteB6,noteB7,noteB8,noteB9,noteB10,noteB11,noteB12,noteB13,noteB14,noteB15,noteB16,noteB17,noteB18,noteB19,noteB20,noteB21,noteB22,noteB23,noteB24,noteB25,noteB26,noteB27,noteB28,noteB29,noteB30,noteB31,noteB32);
+//    mem_set_values(notestoPlayC,noteC1,noteC2,noteC3,noteC4,noteC5,noteC6,noteC7,noteC8,noteC9,noteC10,noteC11,noteC12,noteC13,noteC14,noteC15,noteC16,noteC17,noteC18,noteC19,noteC20,noteC21,noteC22,noteC23,noteC24,noteC25,noteC26,noteC27,noteC28,noteC29,noteC30,noteC31,noteC32);
     vel1  = velocities[rand(spaceLike)];
     vel2  = velocities[rand(spaceLike)];
     vel3  = velocities[rand(spaceLike)];
@@ -247,7 +330,7 @@ while (midirecv(offset,msg1,msg2,msg3)) (
 
 // This code plays the riff
 
-  currentNote == 3 ? (
+  currentNote == 1 ? (
     playThisNote < loopLength ? (
 
       msg1==$x90 ? (
@@ -270,5 +353,18 @@ while (midirecv(offset,msg1,msg2,msg3)) (
     );
     
   );
+  
+  currentNote == 0 ? (
+  
+      msg1==$x90 ? (
+      midisend(offset,msg1,tonic,msg3*rand(0));
+      );
+  
+      msg1==$x80 ? (
+      midisend(offset,msg1,tonic,msg3);
+
+      );
+      
+    );
 
 );
