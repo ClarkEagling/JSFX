@@ -1,0 +1,64 @@
+desc:Triggered Rhythm Randomizer (ee33) -- MIDI Note 4 resets, note 3 = large dynamic range, note 2 = small dyn range (louder) 
+slider1: 5<0,10,1>Empty Space Likelihood (F -2 Cycles)
+slider2: 16<1,16,1>Random Selection Range
+
+in_pin: none
+out_pin:none
+
+
+@init
+rootNote = 36;
+
+@slider
+range = slider2;
+
+@block
+
+spaceLike = slider1;
+
+//this code adjusts the sliders on MIDI trigger
+
+while (midirecv(offset,msg1,msg2,msg3)) ( 
+
+  currentNote = msg2;
+  
+  currentNote == 5 && msg1==$x90 ? (
+    slider1 += 1;
+    slider1 == 11 ? (
+      slider1 = 0);
+  );
+  
+  
+  // This code creates the riff
+  
+  currentNote == 4 && msg1==$x90 ? (
+    note1 = rootNote + ceil(rand(range));
+    note2 = rootNote + ceil(rand(range));
+     );
+
+
+// This code plays the riff
+
+  currentNote == 3 ? (
+
+      msg1==$x90 ? (
+      midisend(offset,msg1,note1,msg3*rand(0));
+      );
+
+      msg1==$x80 ? (
+      midisend(offset,msg1,note1,msg3);
+      );
+  );
+      
+  currentNote == 2 ? (
+
+      msg1==$x90 ? (
+      midisend(offset,msg1,note2,msg3*rand(0.5));
+      );
+
+      msg1==$x80 ? (
+      midisend(offset,msg1,note2,msg3);
+      );      
+  );
+
+);
