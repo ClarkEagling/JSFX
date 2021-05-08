@@ -3,12 +3,13 @@ desc:Triggered Random Modal Riffer (ee33) -- MIDI note 4 rerolls riff, note 3 pl
 // tick through root note w / MIDI note 9
 // tick through modes w / MIDI note 8
 // tick through octave range w/ MIDI note 7
-// tick through loop length w / MIDI note6
+// tick through loop length w / MIDI note 6
 // tick through spaciness w / MIDI note5
 
 
 //Reset riff of selected random notes with MIDI note 4
 // tick through riff with MIDI note 3
+//play root note of scale with MIDI note 2
 
 
 slider1:0<0,11,1{C,C#,D,D#,E,F,F#,G,G#,A,A#,B}>Root Note (A -2 Cycles)
