@@ -1,4 +1,4 @@
-desc:Triggered Random Modal Chord Progression(ee33) -- MIDI note 2 makes riff, note 1 plays riff, note 0 plays tonic
+9-desc:Triggered Random Modal Chord Progression(ee33) -- MIDI note 2 makes riff, note 1 plays riff, note 0 plays tonic
 
 // tick through root note w / MIDI note 9
 // tick through modes w / MIDI note 8
@@ -18,8 +18,8 @@ slider2:0<0,6,1{ Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian}
 slider3:1<0,2,1>Additional Octave range (G -2 Cycles)
 slider4: 2<0,7,1{0,4,8,12,16,20,24,28,32}>Loop Length (F# -2 Cycles)
 slider5: 10<0,10,1>Empty Space Likelihood (F -2 Cycles)
-slider6: 2<<0,7,1>Chord Interval 1 (E -2 Cycles)
-slider7: 4<0,7,1>Chord Interval 2 (D# -2 Cycles)
+slider6: 2<<0,7,1>Chord Interval 1 (E -2 Cycles, 0 = note off)
+slider7: 4<0,7,1>Chord Interval 2 (D# -2 Cycles, 0 = note off)
 
 in_pin:none
 out_pin:none
@@ -200,9 +200,14 @@ spaceLike = slider5+3;
 scaleStep1 = slider6;
 scaleStep2 = slider7;
 
+velocNull1 = 1;
+velocNull2 = 1;
+scaleStep1 == 0 ? ( velocNull1 = 0);
+scaleStep2 == 0 ? ( velocNull2 = 0);
+
 tonic = rootNote + octave[rand(octavesMax)];
-tonicB = rootNote + modeCurrent[3] + octave[rand(octavesMax)];
-tonicC = rootNote + modeCurrent[5] + octave[rand(octavesMax)];
+tonicB = rootNote + modeCurrent[scaleStep1] + octave[rand(octavesMax)];
+tonicC = rootNote + modeCurrent[scaleStep2] + octave[rand(octavesMax)];
 
 //this code adjusts the sliders on MIDI trigger
 
@@ -331,6 +336,8 @@ seed32  =rand(8);  note32  =rootNote + modeCurrent[seed32] + octave[rand(octaves
 
 // This code plays the riff
 
+// This code plays the riff
+
   currentNote == 1 ? (
     playThisNote < loopLength ? (
 
@@ -340,8 +347,8 @@ seed32  =rand(8);  note32  =rootNote + modeCurrent[seed32] + octave[rand(octaves
       noteMsgC = notestoplayC[playThisNote];
       velMsg = velForNote[thisVelocity];
       midisend(offset,msg1,noteMsg,msg3*velMsg);
-      midisend(offset,msg1,noteMsgB,msg3*velMsg);
-      midisend(offset,msg1,noteMsgC,msg3*velMsg);
+    velocNull1 == 1 ?(midisend(offset,msg1,noteMsgB,msg3*velMsg));
+    velocNull2 == 1 ?(midisend(offset,msg1,noteMsgC,msg3*velMsg));
       );
 
       msg1==$x80 ? (
@@ -354,9 +361,9 @@ seed32  =rand(8);  note32  =rootNote + modeCurrent[seed32] + octave[rand(octaves
       
     );
     playThisNote >= loopLength ? (
-    midisend(offset,msg1,noteMsg,msg3); 
-    midisend(offset,msg1,noteMsgB,msg3);
-    midisend(offset,msg1,noteMsgC,msg3);
+    midisend(offset,msg1,noteMsg,msg3*velMsg); 
+    velocNull1 == 1 ?(midisend(offset,msg1,noteMsgB,msg3*velMsg));
+    velocNull2 == 1 ?(midisend(offset,msg1,noteMsgC,msg3*velMsg));
     playThisNote = 0;
     thisVelocity = 0;
     );
@@ -369,8 +376,8 @@ seed32  =rand(8);  note32  =rootNote + modeCurrent[seed32] + octave[rand(octaves
   
       msg1==$x90 ? (
       midisend(offset,msg1,tonic,msg3*rand(0));
-      midisend(offset,msg1,tonicB,msg3*rand(0));
-      midisend(offset,msg1,tonicC,msg3*rand(0));
+  velocNull1 == 1 ?(midisend(offset,msg1,tonicB,msg3*rand(0)));
+  velocNull2 == 1 ?( midisend(offset,msg1,tonicC,msg3*rand(0)));
       );
   
       msg1==$x80 ? (
